@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="author" content="Krasimir Tsonev" />
+        <meta name="copyright" content="Krasimir Tsonev" />
+        <meta name="robots" content="follow,index" />
+        <meta name="title" content="animo - javascript animation framework" />
+        <meta name="keywords" content="animo - javascript animation framework" lang="en-us" />
+        <meta name="description" content="animo - javascript animation framework" />
+        
+        <title>animo - javascript animation framework</title>
+
+        <link rel="stylesheet" href="./css/bootstrap.min.css" />
+        <link rel="stylesheet" href="./css/styles.css" />
+
+        <script src="./js/jquery.js"></script>
+        <script src="../src/ease.js"></script>
+        <script>
+
+            var animationIndex = 0;
+            var options = {
+                start: 0,
+                end: 350,
+                steps: 30
+            };
+            var duration = 1000;
+            var element = null;
+            var values = [];
+
+            function startAnimation() {
+
+                // setup animation
+                element = $("#obj");
+                options.method = $("#ease-type").val();
+                options.steps = Number($("#ease-steps").val());
+                duration = Number($("#ease-duration").val());
+
+                // getting ease numbers
+                values = ease.calculate(options);
+
+                // start animation
+                animationIndex = 0;
+                animate();
+
+                // setting animation guides
+                $(".from").html("margin-left: " + options.start + "px");
+                $(".to").html("margin-left: " + options.end + "px");
+                $(".to").css("margin-left", options.end + "px");
+                $(".from").css("display", "block");
+                $(".to").css("display", "block");
+
+            }
+            function animate() {
+                element.css("margin-left", values[animationIndex] + "px");
+                settingInfo();
+                if(animationIndex < options.steps) {
+                    animationIndex += 1;
+                    setTimeout(animate, duration / options.steps);
+                }
+            }
+            function settingInfo() {
+                $("#info").empty();
+                var str = 'values: ';
+                for(var i=0; i<options.steps; i++) {
+                    if(i == animationIndex) {
+                        str += '<strong>' + values[i] + '</strong>';
+                    } else {
+                        str += values[i];
+                    }
+                    if(i < options.steps - 1){
+                        str += ", ";
+                    }
+                }
+                $("#info").html(str);
+            }
+        </script>
+        
+    </head>
+<body>
+    <div class="container">
+        <h1>easejs</h1>
+        <h4>Robert Pener's easing functions for javascript</h4>
+        <hr />
+        <a href="javascript:startAnimation()" class="btn btn-primary">start animation</a>
+        <select id="ease-type" class="pull-right">
+            <option value="OutBack">OutBack</option>
+            <option value="InOutBack">InOutBack</option>
+            <option value="InBack">InBack</option>
+            <option value="InOutSine">InOutSine</option>
+            <option value="InSine">InSine</option>
+            <option value="OutSine">OutSine</option>
+            <option value="OutBounce">OutBounce</option>
+            <option value="InBounce">InBounce</option>
+            <option value="InOutBounce">InOutBounce</option>
+            <option value="InCirc">InCirc</option>
+            <option value="OutCirc">OutCirc</option>
+            <option value="InOutCirc">InOutCirc</option>
+            <option value="In">In</option>
+            <option value="Out">Out</option>
+            <option value="InOut">InOut</option>
+            <option value="InElastic">InElastic</option>
+            <option value="OutElastic">OutElastic</option>
+            <option value="InOutElastic">InOutElastic</option>
+            <option value="InExpo">InExpo</option>
+            <option value="OutExpo">OutExpo</option>
+            <option value="InOutExpo">InOutExpo</option>
+            <option value="Linear">Linear</option>
+            <option value="InLinear">InLinear</option>
+            <option value="OutLinear">OutLinear</option>
+            <option value="InOutLinear">InOutLinear</option>
+            <option value="InQuad">InQuad</option>
+            <option value="OutQuad">OutQuad</option>
+            <option value="InOutQuad">InOutQuad</option>
+            <option value="InQuart">InQuart</option>
+            <option value="OutQuart">OutQuart</option>
+            <option value="InOutQuart">InOutQuart</option>
+            <option value="InQuint">InQuint</option>
+            <option value="OutQuint">OutQuint</option>
+            <option value="InOutQuint">InOutQuint</option>
+        </select>
+        <select id="ease-duration" class="pull-right">
+            <option value="500">500ms</option>
+            <option value="1000" selected="selected">1000ms</option>
+            <option value="1500">1500ms</option>
+            <option value="2000">2000ms</option>
+            <option value="2500">2500ms</option>
+            <option value="3000">3000ms</option>
+            <option value="3500">3500ms</option>
+        </select>
+        <select id="ease-steps" class="pull-right">
+            <option value="20">20 steps</option>
+            <option value="30">30 steps</option>
+            <option value="40" selected="selected">40 steps</option>
+            <option value="60">60 steps</option>
+            <option value="80">80 steps</option>
+            <option value="100">100 steps</option>
+        </select>
+        <br class="clearfix" />
+        <hr />
+        <div id="obj" class="btn">object to animate</div>
+        <div class="guides-holder">
+            <div class="from guide pull-left"></div>
+            <div class="to guide pull-left"></div>
+            <br class="clearfix" />
+        </div>
+        <hr />
+        <div id="info"></div>
+        <hr />
+        <h4>Example usage:</h4>
+<pre class="code">
+var options = {
+    start: 0, // the initial value of the property
+    end: 350, // the end value of the property
+    steps: 20, // how many steps/keyframes will be your animation
+    method: "OutBack" // ease method
+};
+var values = ease.calculate(options); 
+/* 
+values is an array which is filled with numbers from 30 to 105. For example:
+[0, 80, 149, 207, 255, 295, 325, 349, 366, 377, 383, 385, 383, 379, 374, 367, 361, 355, 351, 350]
+As it is done on this page, later you can use these numbers to create an animation.
+*/
+</pre>
+    </div>
+</body>
+</html>

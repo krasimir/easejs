@@ -1,0 +1,16 @@
+#obj {
+    width: 150px;
+    text-align: center;
+}
+.guides-holder {
+    position: relative;
+}
+.guide {
+    padding: 0 0 0 10px;
+    font-size: 11px;
+    color: #999;
+    border-left: solid 1px #000;
+    display: none;
+    position: absolute;
+    top: 10px;
+}
