@@ -23,3 +23,5 @@
     As it is done on this page, later you can use these numbers to create an animation.
     */
 
+#### Valid ease methods
+InBack, OutBack, InOutBack, OutBounce, InBounce, InOutBounce, InCirc, OutCirc, InOutCirc, In, Out, InOut, InElastic, OutElastic, InOutElastic, InExpo, OutExpo, InOutExpo, Linear, InLinear, OutLinear, InOutLinear, InQuad, OutQuad, InOutQuad, InQuart, OutQuart, InOutQuart, InQuint, OutQuint, InOutQuint, InSine, OutSine, InOutSine
